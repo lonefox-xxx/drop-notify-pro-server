@@ -3,7 +3,6 @@ const Cheerio = require('cheerio');
 const client = require("../database/redis");
 const ms = require("ms");
 const UserAgent = require("user-agents");
-const fetchWithRetry = require("../utils/fetchWithretry");
 
 async function GetAmazonOffers() {
 
@@ -16,8 +15,8 @@ async function GetAmazonOffers() {
             const userAgent = new UserAgent();
             const parsedUserAgent = userAgent.toString()
             const headers = { 'User-Agent': `${parsedUserAgent}` };
-            const { data: { data }, data: res } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/offers/amazon?page=${page}`, headers });
-            console.log(res.status)
+            const { data, status } = await axios.get(`https://www.dealsmagnet.com/offers/amazon?page=${page}`, { headers });
+            console.log(status)
             const { success, reachEnd, offers } = await GetData(data, lastUpdatedOffer)
             if (success) {
                 Alloffers.push(...offers)
@@ -91,8 +90,8 @@ async function ExtractOfferURL(dataCode) {
         const userAgent = new UserAgent();
         const parsedUserAgent = userAgent.toString()
         const headers = { 'User-Agent': `${parsedUserAgent}` };
-        const { data: { request } } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/buy?${dataCode}`, headers });
 
+        const { request } = await axios.get(`https://www.dealsmagnet.com/buy?${dataCode}`, { headers })
         const redirectUri = request.res.responseUrl;
         console.log(redirectUri)
         const urlParams = new URL(redirectUri);;
