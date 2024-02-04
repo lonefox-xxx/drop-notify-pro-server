@@ -15,7 +15,7 @@ function fetchWithRetry({ url, maxRetries = 5, initialTimeout = 10000, data = ''
                         port: 8001,
                         auth: {
                             username: 'scraperapi',
-                            password: '134ecdbc1e0bf4565004cfa789f280fb'
+                            password: '61e8b8912849e154d57583fd2e274a7d'
                         },
                         protocol: 'http'
                     },

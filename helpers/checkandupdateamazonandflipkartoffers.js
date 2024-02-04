@@ -9,8 +9,8 @@ async function checkAndUpdateAmazonAndFlipkartOffers() {
     try {
         const [AmazonOffers = [], FlipkartOffers = [], OtherOffers = []] = await Promise.all([
             GetAmazonOffers(),
-            GetFlipkartOffers(),
-            GetallOtherOffers(),
+            // GetFlipkartOffers(),
+            // GetallOtherOffers(),
         ])
 
         await AmazonOfferNotification(AmazonOffers.reverse())
@@ -19,7 +19,7 @@ async function checkAndUpdateAmazonAndFlipkartOffers() {
         console.log('all update completed')
         return { AmazonOffers, FlipkartOffers, OtherOffers };
     } catch (error) {
-        console.error("Error in checkAndUpdateAmazonAndFlipkartOffers:", error);
+        console.error("Error in checkAndUpdateAmazonAndFlipkartOffers:", error.message);
         throw error;
     }
 }
