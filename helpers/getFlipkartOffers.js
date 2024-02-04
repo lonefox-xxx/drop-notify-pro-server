@@ -15,7 +15,10 @@ async function GetFlipkartOffers() {
         const Alloffers = [];
         let page = 1
         while (true) {
-            const { data } = await axios.get(`https://www.dealsmagnet.com/offers/flipkart?page=${page}`);
+            const userAgent = new UserAgent();
+            const parsedUserAgent = userAgent.toString()
+            const headers = { 'User-Agent': `${parsedUserAgent}` };
+            const { data } = await axios.get(`https://www.dealsmagnet.com/offers/flipkart?page=${page}`, { headers });
             const { success, reachEnd, offers } = await GetData(data, lastUpdatedOffer)
             if (success) {
                 Alloffers.push(...offers)
