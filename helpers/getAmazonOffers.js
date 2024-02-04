@@ -16,7 +16,8 @@ async function GetAmazonOffers() {
             const userAgent = new UserAgent();
             const parsedUserAgent = userAgent.toString()
             const headers = { 'User-Agent': `${parsedUserAgent}` };
-            const { data } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/offers/amazon?page=${page}`, headers });
+            const { data: { data }, data: res } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/offers/amazon?page=${page}`, headers });
+            console.log(res.status)
             const { success, reachEnd, offers } = await GetData(data, lastUpdatedOffer)
             if (success) {
                 Alloffers.push(...offers)
@@ -90,7 +91,7 @@ async function ExtractOfferURL(dataCode) {
         const userAgent = new UserAgent();
         const parsedUserAgent = userAgent.toString()
         const headers = { 'User-Agent': `${parsedUserAgent}` };
-        const { request } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/buy?${dataCode}`, headers });
+        const { data: { request } } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/buy?${dataCode}`, headers });
 
         const redirectUri = request.res.responseUrl;
         console.log(redirectUri)

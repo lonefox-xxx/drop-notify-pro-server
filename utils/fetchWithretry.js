@@ -25,6 +25,7 @@ function fetchWithRetry({ url, maxRetries = 5, initialTimeout = 10000, data = ''
             } catch (error) {
                 retryCount++;
                 timeout = Math.min(timeout * 2, 10000);
+                console.log(error)
             }
         }
         console.log('Request failed after max retries');
