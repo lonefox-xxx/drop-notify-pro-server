@@ -40,7 +40,7 @@ async function AmazonOfferNotification(AmazonOffers) {
         const id = item.valueofD
         const Uri = item.productUri.Uri
         const { success, src } = await CreateOfferImage({ imageSrc, couponCode, mrpPrice, dealPrice, discountPercentage, discription, note, store })
-
+        console.log(src)
         if (success) {
             const { result: { message_id, sender_chat: { username } } } = await sendNotificationto_Telegram(src, item, 'Amazon.in', Uri)
 

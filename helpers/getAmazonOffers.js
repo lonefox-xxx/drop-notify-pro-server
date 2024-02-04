@@ -93,7 +93,7 @@ async function ExtractOfferURL(dataCode) {
         const { request } = await fetchWithRetry({ url: `https://www.dealsmagnet.com/buy?${dataCode}`, headers });
 
         const redirectUri = request.res.responseUrl;
-
+        console.log(redirectUri)
         const urlParams = new URL(redirectUri);;
         urlParams.searchParams.delete("ascsubtag");
         urlParams.searchParams.delete("tag");
