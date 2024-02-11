@@ -1,8 +1,7 @@
 const ms = require("ms");
-const axios = require('axios');
 const client = require('../database/redis');
-const https = require('https');
 const genarateEarnkaroLinkForProducts = require('../earnkaro/createlinkforAllproducts/genarateLinkForProducts');
+const fetchWithRetry = require("../utils/fetchWithretry");
 
 function GetAllOffers() {
     console.log('getting offers...')
@@ -15,9 +14,11 @@ function GetAllOffers() {
         while (true) {
             try {
                 const url = 'http://www.offertag.in/search';
-                const params = { shops: ['amazon', 'flipkart', 'myntra'], deals: 3, q: '', page };
+                const parameters = { shops: ['amazon', 'flipkart', 'myntra'], deals: 3, q: '', page };
                 const headers = { 'X-Requested-With': 'XMLHttpRequest' };
-                const { data: { data } } = await axios.get(url, { params: params, headers: headers })
+
+                const { data: { data } } = await fetchWithRetry({ url, method: 'GET', headers, params: { params: parameters } })
+                // const { data: { data } } = await axios.get(url, { params: params, headers: headers })
                 const { success, reachEnd, offers } = await GetOffers(data, lastUpdatedOffer)
 
                 if (success) {
@@ -273,11 +274,10 @@ function FilterMyntraOffers(offers) {
 }
 
 async function getPriceHistory(pid, store) {
-    const httpsAgent = new https.Agent({ rejectUnauthorized: false });
     const postData = `pid=${pid}&store=${store}`;
 
     try {
-        const response = await axios.post('https://api2.indiadesire.com/n/m/api.php?rquest=getProductPriceDataMN', postData, { httpsAgent: httpsAgent });
+        const response = await fetchWithRetry({ url: 'https://api2.indiadesire.com/n/m/api.php?rquest=getProductPriceDataMN', method: "POST", data: postData });
         return response.data;
     } catch (error) {
         throw new Error('Error fetching price history: ' + error.message);
@@ -286,7 +286,7 @@ async function getPriceHistory(pid, store) {
 
 async function GetMintraURL(origin) {
     try {
-        const response = await axios.get(origin)
+        const response = await fetchWithRetry({ url: origin });
         const finalRedirectedUrl = decodeURIComponent(response.request.res.responseUrl);
         return finalRedirectedUrl
     } catch (error) {
@@ -296,7 +296,7 @@ async function GetMintraURL(origin) {
 async function GetFlipkartURL(origin) {
     try {
         const data = '\x0d\x0a\x0d\x0a';
-        const response = await axios({ method: 'get', url: origin, data: data, })
+        const response = await fetchWithRetry({ url: origin, data: data, })
         const finalRedirectedUrl = decodeURIComponent(response.request.res.responseUrl);
         return finalRedirectedUrl
     } catch (error) {
