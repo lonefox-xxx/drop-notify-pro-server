@@ -92,7 +92,7 @@ function genarateNotificationMessage(attributes, url, linkPlaceHolder) {
         const lowestprice = attributes.lowestprice
         const hotness = attributes.hotness
         const lootDealText = "The product is now at its lowest price ever, so it's the perfect time to buy 🔥"
-        const hotDealText = `The price is now ${lowestprice == dealPrice ? '' : 'almost'} same as its all-time low of ${lowestprice}. Sounds great 😘`
+        const hotDealText = `The price is now ${lowestprice == deal ? '' : 'almost'} same as its all-time low of ${lowestprice}. Sounds great 😘`
         const dealDiscription = dealType == 1 ? '#Hot_deal' : dealType == 2 ? '#Loot_deal' : ''
 
         let message = ''
