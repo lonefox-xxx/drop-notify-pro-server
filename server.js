@@ -9,6 +9,9 @@ const GetEarnkaroProductLink = require('./earnkaro/helper/getProductLink');
 const CheckandUpdateEarnkaroOffers = require('./earnkaro/helper/checkandupdateearnoffers');
 const LogintoAffliaters = require('./earnkaro/createlinkforAllproducts/logintoAffliaters');
 const genarateEarnkaroLinkForProducts = require('./earnkaro/createlinkforAllproducts/genarateLinkForProducts');
+const checkAndUpdateAmazonAndFlipkartOffers = require('./helpers/checkandupdateamazonandflipkartoffers');
+require('./database/redis')
+require('./database/mongodb')
 const app = express();
 const port = process.env.PORT || 3000;
 // const port = 3000;
@@ -109,6 +112,11 @@ app.patch('/checkandupdateearnkarooffers', async (req, res) => {
     const u = await CheckandUpdateEarnkaroOffers()
     res.send(u)
 })
+app.patch('/checkandupdateAlloffers', async (req, res) => {
+    const u = await checkAndUpdateAmazonAndFlipkartOffers()
+    res.send(u)
+})
+
 
 app.post('/clearredis', (req, res) => {
     const key = req.body.key

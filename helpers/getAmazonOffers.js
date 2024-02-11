@@ -120,8 +120,8 @@ async function ExtractOfferURL(dataCode) {
         };
         const { request } = await axios.get(`https://www.dealsmagnet.com/buy?${dataCode}`, { headers })
         const redirectUri = request.res.responseUrl;
-        console.log(redirectUri)
-        const urlParams = new URL(redirectUri);;
+
+        const urlParams = new URL(redirectUri);
         urlParams.searchParams.delete("ascsubtag");
         urlParams.searchParams.delete("tag");
         urlParams.searchParams.delete("smid");

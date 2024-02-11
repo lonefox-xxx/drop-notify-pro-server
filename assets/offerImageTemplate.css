@@ -1,6 +1,6 @@
 body {
     height: 100vh;
-    background-color: black;
+    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -10,7 +10,7 @@ body {
 .container {
     width: 500px;
     height: 290px;
-    background-color: #212121;
+    background-color: #000;
     display: flex;
     border-radius: 3px;
     overflow: hidden;
@@ -25,7 +25,6 @@ body {
     align-items: center;
     padding-top: 10px;
     gap: 10px;
-    /* background-color: aqua; */
 }
 
 .right-section {
@@ -36,9 +35,6 @@ body {
     justify-content: start;
     align-items: center;
     padding-top: 10px;
-    /* gap: 10px; */
-    /* border-left: 1px solid black; */
-    /* background-color: green; */
 }
 
 .brandName {
