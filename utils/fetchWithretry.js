@@ -17,9 +17,6 @@ async function fetchWithRetry({ url, maxRetries = 5, initialTimeout = 10000, dat
     axiosRetry(instance, {
         retries: maxRetries,
         retryDelay: (retryCount) => Math.min(initialTimeout * Math.pow(2, retryCount), 10000),
-        retryCondition: (error) => {
-            return axiosRetry.isNetworkError(error) || axiosRetry.isRetryableError(error);
-        }
     });
 
     try {
@@ -33,7 +30,6 @@ async function fetchWithRetry({ url, maxRetries = 5, initialTimeout = 10000, dat
         });
         return response;
     } catch (error) {
-        console.error(error);
         throw error;
     }
 }
