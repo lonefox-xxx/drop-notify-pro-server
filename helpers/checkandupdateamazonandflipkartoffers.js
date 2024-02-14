@@ -44,6 +44,7 @@ async function OfferNotification(Offers) {
             let prevUpdatedOffers = JSON.parse(await client.get("updated_Offers")) || [];
 
             item.offerImg = src
+            item.created = new Date().getTime()
             prevUpdatedOffers.push(id)
 
             await client.set('updated_Offers', JSON.stringify(prevUpdatedOffers))

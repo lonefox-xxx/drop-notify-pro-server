@@ -18,7 +18,6 @@ function GetAllOffers() {
                 const headers = { 'X-Requested-With': 'XMLHttpRequest' };
 
                 const { data: { data } } = await fetchWithRetry({ url, method: 'GET', headers, params: { params: parameters } })
-                // const { data: { data } } = await axios.get(url, { params: params, headers: headers })
                 const { success, reachEnd, offers } = await GetOffers(data, lastUpdatedOffer)
 
                 if (success) {
@@ -56,7 +55,6 @@ function GetOffers(Alldeals, lastUpdatedOffer) {
             const id = deal.id
             if (id == lastUpdatedOfferId) {
                 resolve({ success: true, offers, reachEnd: true });
-                // console.log('ok', deal, lastUpdatedOfferId)
                 break;
             }
             const discription = deal.title
