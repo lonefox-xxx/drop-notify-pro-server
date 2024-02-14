@@ -19,10 +19,10 @@ class Database {
         }
     }
 
-    async getLogs(id = {}, collectionName, sort = {}, limit = 100) {
+    async getLogs(query = {}, collectionName, sort = {}, limit = 100, skip = 0) {
         try {
             const collection = database.collection(collectionName);
-            const data = await collection.find(id).sort(sort).limit(limit).toArray();
+            const data = await collection.find(query).sort(sort).skip(skip).limit(limit).toArray();
             return data ? { success: true, data } : { success: false, data: {} };
         } catch (error) {
             console.error('Error getting logs:', error);

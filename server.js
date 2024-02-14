@@ -117,13 +117,15 @@ app.patch('/checkandupdateAlloffers', async (req, res) => {
     res.send(u)
 })
 
-
 app.post('/clearredis', (req, res) => {
     const key = req.body.key
     client.del(key).then((d) => {
         res.send('ok')
     })
 })
+
+app.get('/getoffers', require('./routes/fetchallOffers'))
+
 
 app.listen(port, async () => {
     console.log(`Server running on port: ${port}`);
