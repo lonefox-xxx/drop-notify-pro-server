@@ -12,8 +12,9 @@ async function FetchAllOffers(req, res) {
 
         if (stores && stores.length > 0) query.store = { $in: stores };
         if (categorys && categorys.length > 0) query['category.category_name'] = { $in: categorys };
-        if (type) query.dealType = +type;
+        if (type && type != 'all') query.dealType = +type;
 
+        // console.log(query)
         const skips = (page - 1) * pageSize;
 
         const { success, data } = await db.getLogs(query, 'deals', { created: -1 }, pageSize, skips);
