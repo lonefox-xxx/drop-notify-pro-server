@@ -5,13 +5,13 @@ async function FetchAllOffers(req, res) {
     try {
         let { stores = null, categorys = null, type = null, page = 1, pageSize = 50 } = req.query;
 
-        categorys = categorys?.split(',');
-        stores = stores?.split(',');
+        if (categorys && categorys != 'all') categorys = categorys?.split(',');
+        if (stores && stores != 'all') stores = stores?.split(',');
 
         let query = {};
 
-        if (stores && stores.length > 0) query.store = { $in: stores };
-        if (categorys && categorys.length > 0) query['category.category_name'] = { $in: categorys };
+        if (stores && stores.length > 0 && stores != 'all') query.store = { $in: stores };
+        if (categorys && categorys.length > 0 && categorys != 'all') query['category.category_name'] = { $in: categorys };
         if (type && type != 'all') query.dealType = +type;
 
         // console.log(query)
