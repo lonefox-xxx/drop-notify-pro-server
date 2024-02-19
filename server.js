@@ -125,7 +125,9 @@ app.post('/clearredis', (req, res) => {
 })
 
 app.get('/getoffers', require('./routes/fetchallOffers'))
-
+app.post('/savealert', require('./routes/saveAlert'))
+app.get('/getalert', require('./routes/getalert'))
+app.delete('/dropalert', require('./routes/dropAlert'))
 
 app.listen(port, async () => {
     console.log(`Server running on port: ${port}`);

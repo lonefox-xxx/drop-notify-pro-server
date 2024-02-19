@@ -37,9 +37,8 @@ class Database {
         return res;
     }
 
-    async clearLogs(body, collectionName) {
-        const data = body.data ?? {};
-        const res = await database.collection(collectionName).deleteMany(data);
+    async clearLogs(id = {}, collectionName) {
+        const res = await database.collection(collectionName).deleteOne(id);
         return res;
     }
 
