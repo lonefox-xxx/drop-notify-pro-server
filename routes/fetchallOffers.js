@@ -15,9 +15,9 @@ async function FetchAllOffers(req, res) {
         if (type && type != 'all') query.dealType = +type;
 
         // console.log(query)
-        const skips = (page - 1) * pageSize;
+        const skips = (page - 1) * +pageSize;
 
-        const { success, data } = await db.getLogs(query, 'deals', { created: -1 }, pageSize, skips);
+        const { success, data } = await db.getLogs(query, 'deals', { created: -1 }, +pageSize, skips);
         res.send({ success, data });
     } catch (error) {
         console.error(error);
